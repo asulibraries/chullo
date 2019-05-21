@@ -305,4 +305,24 @@ class FedoraApi implements IFedoraApi
         }
         return $graph;
     }
+
+    /**
+     * Creates version in Fedora.
+     * @param string $uri Resource Versions URI
+     * @param array $header HTTP Headers
+     *
+     * @return ResponseInterface
+     */
+    public function createVersion(
+        $uri = '',
+        $headers = []
+    ) {
+        $options = ['http_errors' => false, 'headers' => $headers];
+
+        return $this->client->request(
+            'POST',
+            $uri,
+            $options
+        );
+    }
 }
