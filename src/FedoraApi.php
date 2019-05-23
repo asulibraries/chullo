@@ -308,19 +308,48 @@ class FedoraApi implements IFedoraApi
 
     /**
      * Creates version in Fedora.
-     * @param string $uri Resource Versions URI
+     * @param string $uri Fedora Resource URI
+     * @param string $timestamp Timestamp for Memento version
      * @param array $header HTTP Headers
      *
      * @return ResponseInterface
      */
     public function createVersion(
         $uri = '',
+        $timestamp = '',
+        $headers = []
+    ) {
+        $resource_headers = getResourceHeaders($uri, $headers);
+        echo $resource_headers;
+
+        $options = ['http_errors' => false];
+        if ($timestamp != ''){
+            $headers['Memento-Datetime'] = $timestamp;
+        }
+        $options['headers'] = $headers;
+
+        return $this->client->request(
+            'POST',
+            $uri,
+            $options
+        );
+    }
+
+    /**
+     * Gets list of versions in Fedora.
+     * @param string $uri Fedora Resource URI
+     * @param array $header HTTP Headers
+     *
+     * @return ResponseInterface
+     */
+    public function getVersions(
+        $uri = '',
         $headers = []
     ) {
         $options = ['http_errors' => false, 'headers' => $headers];
 
         return $this->client->request(
-            'POST',
+            'GET',
             $uri,
             $options
         );
