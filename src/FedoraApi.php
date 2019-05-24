@@ -19,8 +19,10 @@
 namespace Islandora\Chullo;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Default implementation of IFedoraApi using Guzzle.
@@ -319,8 +321,17 @@ class FedoraApi implements IFedoraApi
         $timestamp = '',
         $headers = []
     ) {
+        echo("in the fedora api create version method");
         $resource_headers = getResourceHeaders($uri, $headers);
-        echo $resource_headers;
+        $parsed_link_headers = Psr7\parse_header($resource_headers->getHeader('Link'));
+        $timemap_uri = NULL;
+        foreach($parsed_link_headers as $link_header){
+            if (isset($link_header['rel']) && $link_header['rel'] == "timemap") {
+                $timemap_uri = $link_header[0];
+                $timemap_uri = str_replace("<","",$timemap_uri);
+                $timemap_uri = str_replace(">","",$timemap_uri);
+            }
+        }
 
         $options = ['http_errors' => false];
         if ($timestamp != ''){
@@ -330,7 +341,7 @@ class FedoraApi implements IFedoraApi
 
         return $this->client->request(
             'POST',
-            $uri,
+            $timemap_uri,
             $options
         );
     }
