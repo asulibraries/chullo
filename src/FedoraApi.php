@@ -312,6 +312,7 @@ class FedoraApi implements IFedoraApi
      * Creates version in Fedora.
      * @param string $uri Fedora Resource URI
      * @param string $timestamp Timestamp for Memento version
+     * @param string $content String or binary content
      * @param array $header HTTP Headers
      *
      * @return ResponseInterface
@@ -319,12 +320,16 @@ class FedoraApi implements IFedoraApi
     public function createVersion(
         $uri = '',
         $timestamp = '',
+        $content = null,
         $headers = []
     ) {
         $timemap_uri = $this->getTimemapURI($uri, $headers);
         $options = ['http_errors' => false];
         if ($timestamp != ''){
             $headers['Memento-Datetime'] = $timestamp;
+        }
+        if ($content != null){
+            $options['body'] = $content;
         }
         $options['headers'] = $headers;
 

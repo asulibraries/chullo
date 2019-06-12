@@ -146,6 +146,7 @@ interface IFedoraApi
     public function createVersion(
         $uri = "",
         $timestamp = "",
+        $content = null,
         $headers = []
     );
 
