@@ -373,13 +373,11 @@ class FedoraApi implements IFedoraApi
         $resource_headers = $this->getResourceHeaders($uri, $headers);
         $parsed_link_headers = Psr7\parse_header($resource_headers->getHeader('Link'));
         $timemap_uri = NULL;
-        foreach($parsed_link_headers as $link_header){
-            if (isset($link_header['rel']) && $link_header['rel'] == "timemap") {
-                $timemap_uri = $link_header[0];
-                $timemap_uri = str_replace("<","",$timemap_uri);
-                $timemap_uri = str_replace(">","",$timemap_uri);
-            }
+        $timemap_index = array_search('timemap', array_column($parsed_link_headers, 'rel'));
+        if (is_int($timemap_index)) {
+            $timemap_uri = $parsed_link_headers[$timemap_index][0];
         }
+        $timemap_uri = trim($timemap_uri, "<> \t\n\r\0\x0B");
         return $timemap_uri;
     }
 }
