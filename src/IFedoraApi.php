@@ -139,7 +139,7 @@ interface IFedoraApi
      * Creates a version of the resource in Fedora.
      *
      * @param string    $uri            Resource URI
-     * @param string    $timestamp      Memento Timestamp
+     * @param string    $timestamp      Timestamp in RFC-1123 format
      * @param array     $headers        HTTP Headers
      * @return \Psr\Http\Message\ResponseInterface
      */
