@@ -23,7 +23,6 @@ use GuzzleHttp\Psr7;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * Default implementation of IFedoraApi using Guzzle.
  */
@@ -325,10 +324,10 @@ class FedoraApi implements IFedoraApi
     ) {
         $timemap_uri = $this->getTimemapURI($uri, $headers);
         $options = ['http_errors' => false];
-        if ($timestamp != ''){
+        if ($timestamp != '') {
             $headers['Memento-Datetime'] = $timestamp;
         }
-        if ($content != null){
+        if ($content != null) {
             $options['body'] = $content;
         }
         $options['headers'] = $headers;
