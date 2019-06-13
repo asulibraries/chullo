@@ -378,8 +378,8 @@ class FedoraApi implements IFedoraApi
         $timemap_index = array_search('timemap', array_column($parsed_link_headers, 'rel'));
         if (is_int($timemap_index)) {
             $timemap_uri = $parsed_link_headers[$timemap_index][0];
+            $timemap_uri = trim($timemap_uri, "<> \t\n\r\0\x0B");
         }
-        $timemap_uri = trim($timemap_uri, "<> \t\n\r\0\x0B");
         return $timemap_uri;
     }
 }
