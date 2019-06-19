@@ -22,6 +22,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
+use \RuntimeException;
 
 /**
  * Default implementation of IFedoraApi using Guzzle.
@@ -323,11 +324,12 @@ class FedoraApi implements IFedoraApi
         $headers = []
     ) {
         $timemap_uri = $this->getTimemapURI($uri, $headers);
-        $options = ['http_errors' => false];
-        if ($timestamp != '') {
-            $headers['Memento-Datetime'] = $timestamp;
+        if ($timemap_uri == null) {
+            throw new \RuntimeException('Timemap URI is null, cannot create version');
         }
-        if ($content != null) {
+        $options = ['http_errors' => false];
+        if ($timestamp != '' && $content != null) {
+            $headers['Memento-Datetime'] = $timestamp;
             $options['body'] = $content;
         }
         $options['headers'] = $headers;
@@ -351,8 +353,10 @@ class FedoraApi implements IFedoraApi
         $headers = []
     ) {
         $timemap_uri = $this->getTimemapURI($uri, $headers);
+        if ($timemap_uri == null) {
+            throw new \RuntimeException('Timemap URI is null, cannot create version');
+        }
         $options = ['http_errors' => false, 'headers' => $headers];
-
         return $this->client->request(
             'GET',
             $timemap_uri,
