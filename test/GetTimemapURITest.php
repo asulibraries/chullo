@@ -15,7 +15,7 @@ class GetTimemapURITest extends \PHPUnit_Framework_TestCase
      * @covers  Islandora\Chullo\FedoraApi::getTimemapURI
      * @uses    GuzzleHttp\Client
      */
-    public function testReturnsHeadersOn200()
+    public function testReturnsTimemapHeaderOn200()
     {
 
         $headers = [
