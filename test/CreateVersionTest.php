@@ -30,6 +30,7 @@ class CreateVersionTest extends \PHPUnit_Framework_TestCase
         $api = new FedoraApi($guzzle);
 
         $result = $api->createVersion('');
+        $this->assertEquals(201, $result->getStatusCode());
     }
 
     public function testThrowsExceptionWithoutTimemapUri()
