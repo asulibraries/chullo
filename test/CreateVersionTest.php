@@ -13,7 +13,7 @@ class CreateVersionTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers  Islandora\Chullo\FedoraApi::modifyResource
+     * @covers  Islandora\Chullo\FedoraApi::createVersion
      * @uses    GuzzleHttp\Client
      */
     public function testReturns201withVersions()
@@ -33,6 +33,10 @@ class CreateVersionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(201, $result->getStatusCode());
     }
 
+    /**
+     * @covers  Islandora\Chullo\FedoraApi::createVersion Exception
+     * @uses    GuzzleHttp\Client
+     */
     public function testThrowsExceptionWithoutTimemapUri()
     {
         $mock = new MockHandler(

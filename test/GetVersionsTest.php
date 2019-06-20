@@ -40,6 +40,10 @@ class GetVersionsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(200, $result->getStatusCode());
     }
 
+    /**
+     * @covers  Islandora\Chullo\FedoraApi::getVersions Exception
+     * @uses    GuzzleHttp\Client
+     */
     public function testThrowErrorWithNoTimemapURI()
     {
         $headers = [
