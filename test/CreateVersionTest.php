@@ -8,6 +8,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Islandora\Chullo\FedoraApi;
 use \RuntimeException;
+use \DateTime;
 
 class CreateVersionTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,8 +29,10 @@ class CreateVersionTest extends \PHPUnit_Framework_TestCase
         $handler = HandlerStack::create($mock);
         $guzzle = new Client(['handler' => $handler]);
         $api = new FedoraApi($guzzle);
-
-        $result = $api->createVersion('');
+        $date = new DateTime();
+        $timestamp = $date->format("D, d M Y H:i:s O");
+        $content = "test";
+        $result = $api->createVersion('', $timestamp, $content);
         $this->assertEquals(201, $result->getStatusCode());
     }
 
