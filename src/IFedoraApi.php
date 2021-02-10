@@ -20,8 +20,8 @@ namespace Islandora\Chullo;
 use Psr\Http\Message\ResponseInterface;
 
 // phpcs:disable
-if (class_exists('\EasyRdf_Graph')) {
-    class_alias('\EasyRdf_Graph', ' \EasyRdf\Graph');
+if (class_exists('\EasyRdf_Graph') && !class_exists('\EasyRdf\Graph')) {
+    class_alias('\EasyRdf_Graph', '\EasyRdf\Graph');
 }
 // phpcs:enable
 
